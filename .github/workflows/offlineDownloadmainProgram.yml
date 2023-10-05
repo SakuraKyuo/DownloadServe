@@ -3,11 +3,12 @@ name: 离线下载
 on:
   workflow_dispatch:
     inputs:
-      rom_url:
-        description: 'SourceForge 下载直链'
+      url:
+        description: 'GitLab Link'
         required: true
-        default: 'https://mirrorbits.lineageos.org/full/tissot/20230425/lineage-19.1-20230425-nightly-tissot-signed.zip'
-
+      branch:
+        description: 'branch'
+        required: true
 
 jobs:
   Download:
@@ -18,17 +19,19 @@ jobs:
 
       - name: 下载文件并上传 TMP
         run: |
+          apt install zip
           cd ~
-          aria2c -s 10 -x 10 -d . -o firmware.zip "${{ github.event.inputs.rom_url }}"
+          git clone ${{ github.event.inputs.url } -b ${{ github.event.inputs.branch } output
+          zip -r output.zip output
           cd ${{ github.workspace }}
           touch info.md
-          echo "SourceForge 下载直链：${{ github.event.inputs.rom_url }}" >> info.md
-          curl -k -F "file=@/home/runner/firmware.zip" -F "token=${{ secrets.TMP }}" -F "model=0"  -X POST "https://tmp-cli.vx-cdn.com/app/upload_cli" >> ${{ github.workspace }}/info.md
+          echo "GitLab：${{ github.event.inputs.url }}" >> info.md
+          curl -k -F "file=@/home/runner/output.zip" -F "token=${{ secrets.TMP }}" -F "model=0"  -X POST "https://tmp-cli.vx-cdn.com/app/upload_cli" >> ${{ github.workspace }}/info.md
           
       - name: 上传文件至 Github Release
         uses: ncipollo/release-action@v1.12.0
         with:
-            artifacts: "~/firmware.zip"
+            artifacts: "~/output.zip"
             bodyfile: "${{ github.workspace }}/info.md"
             tag: "OUTPUT_${{ env.BUILD_TIME }}_${{ github.run_id }}"
             token: ${{ secrets.GITHUB_TOKEN }}
