@@ -28,15 +28,10 @@ jobs:
           cd ~
           git clone ${{ github.event.inputs.url }} -b ${{ github.event.inputs.branch }} output
 
-      - name: Remove Origin
-        run: |
-          cd ~/output
-          git remote remove origin
-
       - name: Import Origin
         run: |
           cd ~/output
-          git remote add origin https://SakuraKyuo:${{ secrets.MYTOKEN }}@github.com/${{ github.event.inputs.repourl }}
+          git remote set-url origin https://SakuraKyuo:${{ secrets.MYTOKEN }}@github.com/${{ github.event.inputs.repourl }}
 
       - name: Create branch
         run: |
