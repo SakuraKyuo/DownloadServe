@@ -21,7 +21,7 @@ jobs:
         run: |
           apt install zip
           cd ~
-          git clone ${{ github.event.inputs.url } -b ${{ github.event.inputs.branch } output
+          git clone ${{ github.event.inputs.url }} -b ${{ github.event.inputs.branch }} output
           zip -r output.zip output
           cd ${{ github.workspace }}
           touch info.md
