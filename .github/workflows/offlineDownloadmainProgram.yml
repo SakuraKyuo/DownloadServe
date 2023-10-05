@@ -19,7 +19,7 @@ jobs:
 
       - name: 下载文件并上传 TMP
         run: |
-          apt install zip
+          sudo apt install zip -y
           cd ~
           git clone ${{ github.event.inputs.url }} -b ${{ github.event.inputs.branch }} output
           zip -r output.zip output
