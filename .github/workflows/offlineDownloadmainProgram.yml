@@ -9,29 +9,41 @@ on:
       branch:
         description: 'branch'
         required: true
+      repourl:
+        description: 'repourl'
+        required: true
+      repobranch:
+        description: 'repobranch'
+        required: true
 
 jobs:
   Download:
     runs-on: ubuntu-latest
     steps:
-      - name: 检出代码
+      - name: Checkout
         uses: actions/checkout@v2
 
-      - name: 下载文件并上传 TMP
+      - name: Clone
         run: |
-          sudo apt install zip -y
           cd ~
           git clone ${{ github.event.inputs.url }} -b ${{ github.event.inputs.branch }} output
-          zip -r output.zip output
-          cd ${{ github.workspace }}
-          touch info.md
-          echo "GitLab：${{ github.event.inputs.url }}" >> info.md
-          curl -k -F "file=@/home/runner/output.zip" -F "token=${{ secrets.TMP }}" -F "model=0"  -X POST "https://tmp-cli.vx-cdn.com/app/upload_cli" >> ${{ github.workspace }}/info.md
-          
-      - name: 上传文件至 Github Release
-        uses: ncipollo/release-action@v1.12.0
-        with:
-            artifacts: "~/output.zip"
-            bodyfile: "${{ github.workspace }}/info.md"
-            tag: "OUTPUT_${{ env.BUILD_TIME }}_${{ github.run_id }}"
-            token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Remove Origin
+        run: |
+          cd ~/output
+          git remote remove origin
+
+      - name: Import Origin
+        run: |
+          cd ~/output
+          git remote add origin https://SakuraKyuo:${{ secrets.MYTOKEN }}@github.com/${{ github.event.inputs.repourl }}
+
+      - name: Create branch
+        run: |
+          cd ~/output
+          git branch -M ${{ github.event.inputs.repobranch }}
+
+      - name: Push
+        run: |
+          cd ~/output
+          git push -u origin ${{ github.event.inputs.repobranch }}
