@@ -36,7 +36,7 @@ jobs:
       - name: Create branch
         run: |
           cd ~/output
-          git branch -M ${{ github.event.inputs.repobranch }}
+          git switch -c ${{ github.event.inputs.repobranch }}
 
       - name: Push
         run: |
