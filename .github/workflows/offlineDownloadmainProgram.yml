@@ -12,13 +12,13 @@ jobs:
 
       - name: Clone
         run: |
-          git clone https://SakuraKyuo:${{ secrets.MYTOKEN }}@github.com/SakuraKyuo/frameworks_base 
+          git clone https://SakuraKyuo:${{ secrets.MYTOKEN }}@github.com/SakuraKyuo/frameworks_base --depth=1 
 
       - name: remote
         run: |
           cd frameworks_base
-          git remote add apn https://github.com/VoltageOS-staging/frameworks_base
-          git fetch apn
+          git remote add apn https://github.com/VoltageOS-staging/frameworks_base 
+          git fetch apn --depth=20
 
       - name: pick push
         run: |
