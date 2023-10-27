@@ -18,7 +18,7 @@ jobs:
         run: |
           cd frameworks_base
           git remote add apn https://github.com/VoltageOS-staging/frameworks_base 
-          git fetch apn
+          git fetch apn 14 --depth=30
 
       - name: pick push
         run: |
