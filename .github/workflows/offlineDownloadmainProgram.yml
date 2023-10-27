@@ -2,19 +2,6 @@ name: 离线下载
 
 on:
   workflow_dispatch:
-    inputs:
-      url:
-        description: 'GitLab Link'
-        required: true
-      branch:
-        description: 'branch'
-        required: true
-      repourl:
-        description: 'repourl'
-        required: true
-      repobranch:
-        description: 'repobranch'
-        required: true
 
 jobs:
   Download:
@@ -25,20 +12,16 @@ jobs:
 
       - name: Clone
         run: |
-          cd ~
-          git clone ${{ github.event.inputs.url }} -b ${{ github.event.inputs.branch }} output
+          git clone https://SakuraKyuo:${{ secrets.MYTOKEN }}@github.com/SakuraKyuo/frameworks_base 
 
-      - name: Import Origin
+      - name: remote
         run: |
-          cd ~/output
-          git remote set-url origin https://SakuraKyuo:${{ secrets.MYTOKEN }}@github.com/${{ github.event.inputs.repourl }}
+          cd frameworks_base
+          git remote add apn https://github.com/VoltageOS-staging/frameworks_base
+          git fetch apn
 
-      - name: Create branch
+      - name: pick push
         run: |
-          cd ~/output
-          git switch -c ${{ github.event.inputs.repobranch }}
-
-      - name: Push
-        run: |
-          cd ~/output
-          git push -u origin ${{ github.event.inputs.repobranch }}
+          cd frameworks_base
+          git cherry-pick e772135^..ec05f56
+          git push
