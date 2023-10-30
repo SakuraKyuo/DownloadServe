@@ -13,6 +13,9 @@ jobs:
       - name: Clone
         run: |
           git clone https://SakuraKyuo:${{ secrets.MYTOKEN }}@github.com/ProjectElixir-Devices/vendor_xiaomi_grus -b UDC --depth=1 
+           git config --global user.email "sakurakyuo@protonmail.com"
+           git config --global user.name "sakurakyuo"
+
 
       - name: remote
         run: |
