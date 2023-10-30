@@ -28,6 +28,7 @@ jobs:
       - name: pick push
         run: |
           cd vendor_xiaomi_grus
+          git reset HEAD^1
           git add .
           git commit -m "sdm710-common: Add missing deviceInfoServiceModule.so"
-          git push
+          git push -f
