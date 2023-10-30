@@ -22,7 +22,7 @@ jobs:
           cd vendor_xiaomi_grus/sdm710-common
           wget https://github.com/ProjectElixir-Devices/vendor_xiaomi_grus/commit/4c0aaa6c06098ac4d6d2dd09c9a794d14849b9c4.patch
           git am 4c0aaa6c06098ac4d6d2dd09c9a794d14849b9c4.patch
-          rm -rf proprietary/vendor/lib64/deviceInfoServiceModule.so
+          rm -rf proprietary/vendor/lib64/deviceInfoServiceModule.so 4c0aaa6c06098ac4d6d2dd09c9a794d14849b9c4.patch
           wget https://raw.githubusercontent.com/ProjectElixir-Devices/vendor_xiaomi_sm6150-common-sweet/2ea58a5ea68c36f7e5b21a5863b51c23dba65e0c/proprietary/vendor/lib64/deviceInfoServiceModule.so
           mv deviceInfoServiceModule.so proprietary/vendor/lib64/
       - name: pick push
