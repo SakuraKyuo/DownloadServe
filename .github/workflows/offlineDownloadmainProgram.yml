@@ -12,15 +12,19 @@ jobs:
 
       - name: Clone
         run: |
-          git clone https://SakuraKyuo:${{ secrets.MYTOKEN }}@github.com/SakuraKyuo/frameworks_base --depth=1 
+          git clone https://SakuraKyuo:${{ secrets.MYTOKEN }}@github.com/ProjectElixir-Devices/vendor_xiaomi_grus -b UDC --depth=1 
 
       - name: remote
         run: |
-          cd frameworks_base
-          git fetch https://github.com/VoltageOS-staging/frameworks_base 
-
+          cd vendor_xiaomi_grus/sdm710-common
+          wget https://github.com/ProjectElixir-Devices/vendor_xiaomi_grus/commit/4c0aaa6c06098ac4d6d2dd09c9a794d14849b9c4.patch
+          git am 4c0aaa6c06098ac4d6d2dd09c9a794d14849b9c4.patch
+          rm -rf proprietary/vendor/lib64/deviceInfoServiceModule.so
+          wget https://raw.githubusercontent.com/ProjectElixir-Devices/vendor_xiaomi_sm6150-common-sweet/2ea58a5ea68c36f7e5b21a5863b51c23dba65e0c/proprietary/vendor/lib64/deviceInfoServiceModule.so
+          mv deviceInfoServiceModule.so proprietary/vendor/lib64/
       - name: pick push
         run: |
-          cd frameworks_base
-          git cherry-pick e772135^..ec05f56 -m 13
+          cd vendor_xiaomi_grus
+          git add .
+          git commit -m "sdm710-common: Add missing deviceInfoServiceModule.so"
           git push
