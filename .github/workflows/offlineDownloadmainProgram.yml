@@ -12,23 +12,20 @@ jobs:
 
       - name: Clone
         run: |
-          git clone https://SakuraKyuo:${{ secrets.MYTOKEN }}@github.com/SakuraKyuo/vendor_xiaomi_grus -b UDC --depth=1 
+          git clone https://SakuraKyuo:${{ secrets.MYTOKEN }}@github.com/SakuraKyuo/android_kernel_xiaomi_sdm710 -b UDC kernel 
            git config --global user.email "sakurakyuo@protonmail.com"
            git config --global user.name "sakurakyuo"
 
 
       - name: remote
         run: |
-          cd vendor_xiaomi_grus/sdm710-common
-          wget https://github.com/ProjectElixir-Devices/vendor_xiaomi_grus/commit/4c0aaa6c06098ac4d6d2dd09c9a794d14849b9c4.patch
-          git am 4c0aaa6c06098ac4d6d2dd09c9a794d14849b9c4.patch
-          rm -rf proprietary/vendor/lib64/deviceInfoServiceModule.so 4c0aaa6c06098ac4d6d2dd09c9a794d14849b9c4.patch
-          wget https://raw.githubusercontent.com/ProjectElixir-Devices/vendor_xiaomi_sm6150-common-sweet/2ea58a5ea68c36f7e5b21a5863b51c23dba65e0c/proprietary/vendor/lib64/deviceInfoServiceModule.so
-          mv deviceInfoServiceModule.so proprietary/vendor/lib64/
+          cd kernel
+          git revert 2fa333bc61982bc7f493fa9c9e673916e7980614
+          git revert 2c99b08e05921c254d4575129de3c35425f39e68
+          git revert 893b25b8a949270189a9aa4dfc12e3f7307bc117
+          git revert 85cb70fbeaf6847770a9123c5cd90b34673d05b4
+          git revert 8e097a6
       - name: pick push
         run: |
-          cd vendor_xiaomi_grus
-          git reset HEAD^1
-          git add .
-          git commit -m "sdm710-common: Add missing deviceInfoServiceModule.so"
-          git push -f
+          cd kernel 
+          git push
