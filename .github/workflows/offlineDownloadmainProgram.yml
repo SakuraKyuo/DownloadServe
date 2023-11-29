@@ -20,7 +20,7 @@ jobs:
       - name: remote
         run: |
           cd kernel
-          git reset --hard HEAD^6
+          git reset --hard HEAD~6
       - name: pick push
         run: |
           cd kernel 
