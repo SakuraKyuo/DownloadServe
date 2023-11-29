@@ -20,12 +20,8 @@ jobs:
       - name: remote
         run: |
           cd kernel
-          git revert 2fa333bc61982bc7f493fa9c9e673916e7980614
-          git revert 2c99b08e05921c254d4575129de3c35425f39e68
-          git revert 893b25b8a949270189a9aa4dfc12e3f7307bc117
-          git revert 85cb70fbeaf6847770a9123c5cd90b34673d05b4
-          git revert 8e097a6
+          git reset--hard HEAD^6
       - name: pick push
         run: |
           cd kernel 
-          git push
+          git push -f
