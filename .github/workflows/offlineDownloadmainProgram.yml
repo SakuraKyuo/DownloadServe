@@ -12,16 +12,14 @@ jobs:
 
       - name: Clone
         run: |
-          git clone https://SakuraKyuo:${{ secrets.MYTOKEN }}@github.com/SakuraKyuo/device_xiaomi_sdm710-common_Personal -b UDC kernel 
+          git clone https://SakuraKyuo:${{ secrets.MYTOKEN }}@github.com/ProjectElixir-Devices/device_xiaomi_sdm710-common -b UDC kernel 
            git config --global user.email "sakurakyuo@protonmail.com"
            git config --global user.name "sakurakyuo"
 
       - name: remote
         run: |
           cd kernel
-          git reset --hard HEAD~9
-          wget https://github.com/SakuraKyuo/device_xiaomi_sdm710-common_Personal/commit/37bc916b05acbe72197f1c4bace41a50285ac1ea.patch
-          git am 37bc916b05acbe72197f1c4bace41a50285ac1ea.patch
+          git reset --hard HEAD~7
       - name: pick push
         run: |
           cd kernel 
