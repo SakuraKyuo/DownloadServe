@@ -12,15 +12,16 @@ jobs:
 
       - name: Clone
         run: |
-          git clone https://SakuraKyuo:${{ secrets.MYTOKEN }}@github.com/SakuraKyuo/android_kernel_xiaomi_sdm710_bpf -b lineage-18.1 kernel 
+          git clone https://SakuraKyuo:${{ secrets.MYTOKEN }}@github.com/SakuraKyuo/android_kernel_xiaomi_sdm710 -b UDC kernel 
            git config --global user.email "sakurakyuo@protonmail.com"
            git config --global user.name "sakurakyuo"
 
       - name: remote
         run: |
           cd kernel
-          git reset --hard HEAD~9
+          wget https://github.com/B--B/android_kernel_xiaomi_sdm710/commit/c73e023de0a4b4c6ec040f3c44595b5e66af8751.patch
+          git am c73e023de0a4b4c6ec040f3c44595b5e66af8751.patch
       - name: pick push
         run: |
           cd kernel 
-          git push -f
+          git push
