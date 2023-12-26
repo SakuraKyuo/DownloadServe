@@ -12,16 +12,17 @@ jobs:
 
       - name: Clone
         run: |
-          git clone https://SakuraKyuo:${{ secrets.MYTOKEN }}@github.com/SakuraKyuo/android_kernel_xiaomi_sdm710 -b UDC kernel 
-           git config --global user.email "sakurakyuo@protonmail.com"
-           git config --global user.name "sakurakyuo"
+          git clone https://github.com/ShivamKumarJha/android_tools
+           git clone https://dumps.tadiphone.dev/dumps/oneplus/op5961l1 -b qssi-user-13-TP1A.220905.001-1690190202851-release-keys--IN --depth=1
 
       - name: remote
         run: |
-          cd kernel
-          wget https://github.com/B--B/android_kernel_xiaomi_sdm710/commit/c73e023de0a4b4c6ec040f3c44595b5e66af8751.patch
-          git am c73e023de0a4b4c6ec040f3c44595b5e66af8751.patch
-      - name: pick push
-        run: |
-          cd kernel 
-          git push
+          cd android_tools
+          chmod +x setup.sh
+          sudo bash setup.sh
+          bash tools/proprietary-files.sh op5961l1
+      - name: Upload
+      uses: actions/upload-artifact@v3
+      with:
+        name: file
+        path: android_tools/working/proprietary-files.txt
