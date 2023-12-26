@@ -22,7 +22,7 @@ jobs:
           sudo bash setup.sh
           bash tools/proprietary-files.sh op5961l1
       - name: Upload
-      uses: actions/upload-artifact@v3
-      with:
-        name: file
-        path: android_tools/working/proprietary-files.txt
+        uses: actions/upload-artifact@v3
+        with:
+          name: file
+          path: android_tools/working/proprietary-files.txt
