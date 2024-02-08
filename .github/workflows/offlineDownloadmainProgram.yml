@@ -12,18 +12,19 @@ jobs:
 
       - name: Clone
         run: |
-          git clone https://github.com/ShivamKumarJha/android_tools
-           git clone https://dumps.tadiphone.dev/dumps/oneplus/op5961l1 -b qssi-user-13-TP1A.220905.001-1690190202851-release-keys--IN --depth=1
+          git clone https://SakuraKyuo:${{ secrets.MYTOKEN }}@github.com/SakuraKyuo/android_kernel_xiaomi_sdm710-twilight kernel 
            git config --global user.email "sakurakyuo@protonmail.com"
            git config --global user.name "sakurakyuo"
+
       - name: remote
         run: |
-          cd android_tools
-          chmod +x setup.sh
-          sudo bash setup.sh
-          bash tools/proprietary-files.sh ../op5961l1
-      - name: Upload
-        uses: actions/upload-artifact@v3
-        with:
-          name: file
-          path: android_tools/working/proprietary-files.txt
+          cd kernel
+          git revert 33593be
+          git revert 270ed17
+          git revert 2ed2755
+          git revert 8e6fcc2
+          git revert d7411ac
+      - name: pick push
+        run: |
+          cd kernel 
+          git push
