@@ -19,10 +19,10 @@ jobs:
       - name: remote
         run: |
           cd kernel
-          git revert 33593be
-          git revert 270ed17
+          wget https://github.com/SakuraKyuo/android_kernel_xiaomi_sdm710-twilight/commit/11780c3f30c00c173f1b784c71373c03f029ef35.patch && git am 11780c3f30c00c173f1b784c71373c03f029ef35.patch
+          wget https://github.com/SakuraKyuo/android_kernel_xiaomi_sdm710-twilight/commit/8290394e8e178e27e6e7acdaf1e21f3dce62540e.patch && git am 8290394e8e178e27e6e7acdaf1e21f3dce62540e.patch
           git revert 2ed2755
-          git revert 8e6fcc2
+          wget https://github.com/SakuraKyuo/android_kernel_xiaomi_sdm710-twilight/commit/9e6d88cb77492c131d05b221de01621e5e7b3d92.patch && git am 9e6d88cb77492c131d05b221de01621e5e7b3d92.patch
           git revert d7411ac
       - name: pick push
         run: |
