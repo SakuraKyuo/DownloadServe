@@ -12,18 +12,15 @@ jobs:
 
       - name: Clone
         run: |
-          git clone https://SakuraKyuo:${{ secrets.MYTOKEN }}@github.com/SakuraKyuo/android_kernel_xiaomi_sdm710-twilight kernel 
+          git clone https://SakuraKyuo:${{ secrets.MYTOKEN }}@github.com/SakuraKyuo-open-source/kernel_xiaomi_sdm710.git kernel 
            git config --global user.email "sakurakyuo@protonmail.com"
            git config --global user.name "sakurakyuo"
 
       - name: remote
         run: |
           cd kernel
-          git fetch https://github.com/Rocky7842/android_kernel_xiaomi_sdm710
-          git cherry-pick ea050c7
-          git cherry-pick 1b1e239
-          git cherry-pick 8a9f73c
-          git cherry-pick b7403bc
+          mv ../0001-Remove-KernelSU-support.patch ./
+          git am 0001-Remove-KernelSU-support.patch
       - name: pick push
         run: |
           cd kernel 
